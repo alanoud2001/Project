@@ -1,0 +1,30 @@
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:3001
+    depends_on:
+      - server
+    networks:
+      - app-network
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    networks:
+      - app-network
+    environment:
+      PORT: 3001
+      MONGO_USERNAME: admin
+      MONGO_PASSWORD: csse4103
+      MONGO_DATABASE: EpiOmanDB
+networks:
+      app-network:
+        driver: bridge
+        
